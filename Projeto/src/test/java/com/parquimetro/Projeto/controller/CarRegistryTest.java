@@ -90,7 +90,7 @@ public class CarRegistryTest {
 	    car.setTime("12/12/34");
 	    car.setValueToPay(12.0);
 		
-		when(service.findByPlate("122345")).thenReturn(car);
+		when(service.findById(1L)).thenReturn(car);
 		
 
 
@@ -125,7 +125,7 @@ public class CarRegistryTest {
 	    car.setTime("12/12/34");
 	    car.setValueToPay(12.0);
 		
-		when(service.update(eq(car.getPlate()), any())).thenReturn(car);
+		when(service.update(eq(1L), any())).thenReturn(car);
 		
 
 

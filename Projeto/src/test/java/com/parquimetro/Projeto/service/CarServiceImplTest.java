@@ -47,13 +47,13 @@ public class CarServiceImplTest {
 		car.setValueToPay(12.0);		
 		
 		// when
-	    when(repository.findByPlate(plate)).thenReturn(Optional.of(car));
-	    Car result = service.findByPlate(plate);
+	    when(repository.findById(1L)).thenReturn(Optional.of(car));
+	    Car result = service.findById(1L);
 
 		// then
 		assertNotNull(result);
 		assertEquals(car.getPlate(), result.getPlate());
-		verify(repository, Mockito.times(1)).findByPlate(plate);
+		verify(repository, Mockito.times(1)).findById(1L);
 		
 	}
 	
@@ -101,14 +101,14 @@ public class CarServiceImplTest {
 		car.setCarName("teste");
 		car.setPlate("12334");
 		
-	    when(repository.findByPlate(plate)).thenReturn(Optional.of(car));
+	    when(repository.findById(1L)).thenReturn(Optional.of(car));
 		Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(car);
 		
-	    Car result = service.update(plate, carDto);
+	    Car result = service.update(1L, carDto);
 	    
 	    assertNotNull(result);
 		assertEquals(carDto.getPlate(), result.getPlate());
-		verify(repository, Mockito.times(1)).findByPlate(plate);
+		verify(repository, Mockito.times(1)).findById(1L);
 		verify(repository, Mockito.times(1)).save(car);
 
 

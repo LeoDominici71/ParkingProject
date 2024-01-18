@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -27,11 +28,12 @@ public class Car implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final double PARKINGTAX = 6.0;
 
 	@Id
-	@Column(unique = true)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	private String plate;
 	private String carName;
 	private String autoMaker;
@@ -39,11 +41,12 @@ public class Car implements Serializable {
 	private LocalDateTime saida;
 	private String time;
 	private Double valueToPay;
-	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(plate);
+		return Objects.hash(id);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -53,12 +56,7 @@ public class Car implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Car other = (Car) obj;
-		return Objects.equals(plate, other.plate);
+		return Objects.equals(id, other.id);
 	}
-	
-	
-	
-	
-	
 
 }

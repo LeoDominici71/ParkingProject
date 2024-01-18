@@ -35,15 +35,12 @@ public class CarServiceImpl implements CarService {
 			throw new NulPointerExceptions("The plate, name of the car and automaker cannot be null");
 		}
 
-		try {
 
 			carDTO.setEntrada(LocalDateTime.now());
 			double price = 0.0;
 			carDTO.setValueToPay(price);
 			Car car = new Car();
 
-			// Plate validation
-			plateValidation(carDTO.getPlate());
 
 			car.setPlate(carDTO.getPlate());
 			car.setEntrada(carDTO.getEntrada());
@@ -53,26 +50,24 @@ public class CarServiceImpl implements CarService {
 			repository.save(car);
 
 			return car;
-		} catch (IncorrectResultSizeDataAccessException e) {
-			throw new PlateAlreadyExistException("Plate already exist");
 		}
 
-	}
+	
 
 	@Override
 	@Cacheable(value = "car")
-	public Car findByPlate(String plate) {
+	public Car findById(Long id) {
 		// TODO Auto-generated method stub
-		Optional<Car> carOptional = repository.findByPlate(plate);
+		Optional<Car> carOptional = repository.findById(id);
 		Car car = carOptional.orElseThrow(() -> new EntityNotFoundException("Entity not founds"));
 
 		return car;
 	}
 
 	@Override
-	public Car update(String plate, CarDTO dto) {
+	public Car update(Long id, CarDTO dto) {
 		// TODO Auto-generated method stub
-		Optional<Car> carOptional = repository.findByPlate(plate);
+		Optional<Car> carOptional = repository.findById(id);
 		Car car = carOptional.orElseThrow(() -> new EntityNotFoundException("Entity not founds"));
 		if (car.getSaida() == null) {
 			car.setSaida(LocalDateTime.now());
@@ -83,7 +78,7 @@ public class CarServiceImpl implements CarService {
 			if (dto.getCarName() != null) {
 				car.setCarName(dto.getCarName());
 			}
-			
+
 		} else {
 			throw new CheckOutException("The customer already made check out");
 
@@ -120,20 +115,6 @@ public class CarServiceImpl implements CarService {
 
 	}
 
-	public void plateValidation(String plate) {
-
-		try {
-			Optional<Car> plateUniq = repository.findByPlate(plate);
-			Car car = plateUniq.orElseThrow(() -> new EntityNotFoundException("Entity not founds"));
-
-			if (car != null) {
-				throw new PlateAlreadyExistException("Plate already exist");
-			}
-
-		} catch (EntityNotFoundException e) {
-			CarServiceImpl.log.info("The plate does not exist in our database, new plate is being created");
-		}
-	}
 
 	public Double value(Long hours, Car car) {
 

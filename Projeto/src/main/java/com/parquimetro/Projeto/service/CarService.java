@@ -10,8 +10,8 @@ public interface CarService {
 	
 	Car save(CarDTO carDTO);
 	
-	Car findByPlate(String plate);
+	Car findById(Long id);
 	
-	Car update(String plate, CarDTO dto);
+	Car update(Long id, CarDTO dto);
 
 }

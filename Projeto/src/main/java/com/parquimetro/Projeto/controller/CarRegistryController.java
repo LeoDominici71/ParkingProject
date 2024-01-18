@@ -33,9 +33,9 @@ public class CarRegistryController {
 		@ApiResponse(responseCode = "200", description = "Retrieve Car"),
 		@ApiResponse(responseCode = "404", description = "Plate does not exist")
 	})
-	@GetMapping(value = "/{plate}")
-	public ResponseEntity<CarDTO> findById(@PathVariable String plate){
-	Car car = carService.findByPlate(plate);
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<CarDTO> findById(@PathVariable Long id){
+	Car car = carService.findById(id);
 	CarDTO carDto = new CarDTO(car);
 	return ResponseEntity.ok().body(carDto);	
 	}
@@ -65,9 +65,9 @@ public class CarRegistryController {
 
 
 	})
-	@PutMapping(value = "/{plate}")
-	public ResponseEntity<CarDTO> update(@PathVariable String plate, @RequestBody CarDTO carDTO){
-		Car newCar = carService.update(plate, carDTO);
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<CarDTO> update(@PathVariable Long id, @RequestBody CarDTO carDTO){
+		Car newCar = carService.update(id, carDTO);
 		CarDTO carDto = new CarDTO(newCar);
 		return ResponseEntity.ok().body(carDto);
 		

@@ -15,6 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CarDTO {
 	
+	private Long id;
 	private String plate;
 	private String carName;
 	private String autoMaker;
@@ -33,6 +34,7 @@ public class CarDTO {
 		this.saida = car.getSaida();
 		this.valueToPay = car.getValueToPay();
 		this.time = car.getTime();
+		this.id = car.getId();
 	}
 	
 	
